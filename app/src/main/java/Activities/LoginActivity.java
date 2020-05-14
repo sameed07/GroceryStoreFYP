@@ -3,8 +3,10 @@ package Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -51,6 +54,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         btnSignin = findViewById(R.id.btn_signup);
 
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWithEmail();
+            }
+        });
+
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +83,32 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void loginWithEmail(){
+
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setTitle("Signing up...");
+        if(!TextUtils.isEmpty(txt_email.getText().toString()) && !TextUtils.isEmpty(txt_password.getText().toString())){
+
+           progressDialog.show();
+
+            mAuth.signInWithEmailAndPassword(txt_email.getText().toString(),txt_password.getText().toString())
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+                            Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    });
+        }
+        else {
+
+            Toast.makeText(this, "Fields must not be empty", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
 
     }
 
