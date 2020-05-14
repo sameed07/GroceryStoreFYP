@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,10 +30,12 @@ import com.infusibleCoder.grocerystorefyp.R;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "Tag";
-    private Button signInButton;
+    private Button signInGoogle,btnLogin,btnSignin;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 7;
     private FirebaseAuth mAuth;
+
+    private EditText txt_email,txt_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        signInButton = findViewById(R.id.sign_in_button);
+        signInGoogle = findViewById(R.id.sign_in_button);
+        txt_email = findViewById(R.id.edt_email);
+        txt_password = findViewById(R.id.edt_password);
+        btnLogin = findViewById(R.id.btn_login);
+        btnSignin = findViewById(R.id.btn_signup);
+
         //signInButton.setSize(SignInButton.SIZE_STANDARD);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -49,12 +57,14 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        signInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInGoogle();
             }
         });
+
+
     }
 
     private void signInGoogle() {
