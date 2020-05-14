@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Sign up"
             android:textSize="32dp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -36,6 +36,20 @@
         android:id="@+id/sec_layout">
 
         <EditText
+            android:paddingLeft="18dp"
+            android:background="@drawable/edt_background"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Full Name"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:drawablePadding="12dp"
+            android:id="@+id/edt_username"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            />
+
+        <EditText
+            android:layout_marginTop="12dp"
             android:paddingLeft="18dp"
             android:background="@drawable/edt_background"
             android:layout_width="match_parent"
@@ -60,15 +74,32 @@
             android:layout_marginTop="12dp"
             android:layout_marginRight="32dp"
             />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"
-            android:gravity="end"
+            android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:textStyle="bold"
-            android:id="@+id/txt_forgotpassword"/>
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edt_background"
+            >
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccpicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_defaultPhoneCode="92"
+                app:ccp_textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:inputType="phone"
+                android:textSize="14sp" />
+
+
+
+        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -77,9 +108,9 @@
             android:layout_marginRight="32dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/login_btn_background"
-            android:text="login"
+            android:text="Signup"
             android:textColor="@color/white"
-            android:id="@+id/btn_login"/>
+            android:id="@+id/btn_signup"/>
 
 
     </LinearLayout>
@@ -98,9 +129,9 @@
             android:layout_marginRight="32dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/signup_btn_background"
-            android:text="Sign up"
+            android:text="login"
             android:textColor="@color/themeColor"
-            android:id="@+id/btn_signup"/>
+            android:id="@+id/btn_login"/>
 
         <Button
             android:text="Sign up with google"
@@ -115,5 +146,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="12dp"/>
     </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private int RC_SIGN_IN = 7;
     private FirebaseAuth mAuth;
 
+    FirebaseUser user;
+
     private EditText txt_email,txt_password;
 
     @Override
@@ -48,6 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         txt_password = findViewById(R.id.edt_password);
         btnLogin = findViewById(R.id.btn_login);
         btnSignin = findViewById(R.id.btn_signup);
+
+        btnSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+            }
+        });
 
         //signInButton.setSize(SignInButton.SIZE_STANDARD);
 
@@ -65,6 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+         updateUI(currentUser);
     }
 
     private void signInGoogle() {
@@ -102,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
