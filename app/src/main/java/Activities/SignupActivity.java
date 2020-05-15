@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -104,6 +105,8 @@ public class SignupActivity extends AppCompatActivity {
 
                                                 progressDialog.dismiss();
                                                 Toast.makeText(SignupActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(SignupActivity.this, HomeScreen.class));
+                                                finish();
                                             }
                                         }
                                 );

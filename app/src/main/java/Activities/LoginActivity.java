@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
+
     public void loginWithEmail(){
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
@@ -101,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+                            startActivity(new Intent(LoginActivity.this, HomeScreen.class));
+                            finish();
                         }
                     });
         }
@@ -173,7 +177,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if(user != null){
 
-            Toast.makeText(this, "User Exists ", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginActivity.this, HomeScreen.class));
+            finish();
         }
 
         else{
