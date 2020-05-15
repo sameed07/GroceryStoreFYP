@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.infusibleCoder.grocerystorefyp.R;
 
 public class HomeScreen extends AppCompatActivity {
@@ -100,23 +101,19 @@ public class HomeScreen extends AppCompatActivity {
                 break;
             case R.id.nav_logout:
 
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
+                logout();
                 finish();
                 break;
             default:
                 //fragmentClass = FirstFragment.class;
         }
 
+    }
 
-//        // Insert the fragment by replacing any existing fragment
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-//
-//        // Highlight the selected item has been done by NavigationView
-//        menuItem.setChecked(true);
-//        // Set action bar title
-//        setTitle(menuItem.getTitle());
-//        // Close the navigation drawer
-//        mDrawer.closeDrawers();
+    public void logout(){
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
     }
 }

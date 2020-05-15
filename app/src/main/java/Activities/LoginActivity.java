@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
         else{
 
-            Toast.makeText(this, "Issue occur", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Issue occur", Toast.LENGTH_SHORT).show();
         }
 
     }
