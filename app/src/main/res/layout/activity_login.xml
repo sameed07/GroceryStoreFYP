@@ -36,6 +36,7 @@
         android:id="@+id/sec_layout">
 
         <EditText
+            android:text="testUser@gmail.com"
             android:paddingLeft="18dp"
             android:background="@drawable/edt_background"
             android:layout_width="match_parent"
@@ -54,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="Password"
+            android:text="123456"
             android:drawableLeft="@drawable/ic_lock_black_24dp"
             android:drawablePadding="12dp"
             android:id="@+id/edt_password"
