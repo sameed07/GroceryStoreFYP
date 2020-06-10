@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -28,8 +29,10 @@ import com.infusibleCoder.grocerystorefyp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.CategoryAdapter;
 import Adapters.FlipperAdapter;
 import Interface.GetSliderItemPosition;
+import Models.CategoryModel;
 import Models.NewsModel;
 
 public class HomeScreen extends AppCompatActivity implements GetSliderItemPosition {
@@ -46,10 +49,11 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
     //recycler
     RecyclerView categoryRecycler;
     RecyclerView.LayoutManager layoutManager;
-//    List<CategoryModel> catList = new ArrayList<>();
-//    CategoryAdapter adapter;
+    List<CategoryModel> catList = new ArrayList<>();
+    CategoryAdapter adapter;
 
-
+    FirebaseDatabase cateData;
+    DatabaseReference catRef;
     //fipper
     private AdapterViewFlipper adapterViewFlipper;
 
@@ -69,7 +73,36 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
         mdatabase = FirebaseDatabase.getInstance();
         mRef = mdatabase.getReference("News");
 
+        cateData = FirebaseDatabase.getInstance();
+        catRef = cateData.getReference("Categories");
 
+        //init recycler
+        categoryRecycler = findViewById(R.id.category_recycler);
+        layoutManager = new LinearLayoutManager(this);
+        categoryRecycler.setLayoutManager(layoutManager);
+
+        catRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    CategoryModel model = postSnapshot.getValue(CategoryModel.class);
+                    model.setId(postSnapshot.getKey());
+
+                    catList.add(model);
+                    adapter = new CategoryAdapter(HomeScreen.this,catList);
+
+                    categoryRecycler.setAdapter(adapter);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         //creating 3 dots
         mLayout = findViewById(R.id.txt_dot);
 
