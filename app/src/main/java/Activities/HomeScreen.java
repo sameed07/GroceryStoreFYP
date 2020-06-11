@@ -186,11 +186,7 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
                 break;
             case R.id.nav_category:
                 toolbar.setTitle("Category");
-//                openFragment(new AllLoansFragment());
-////                menuItem.setChecked(true);
-////                // Set action bar title
-////                setTitle(menuItem.getTitle());
-////                // Close the navigation drawer
+                startActivity(new Intent(HomeScreen.this,CategoryActivity.class));
                 mDrawer.closeDrawers();
                 break;
             case R.id.nav_my_orders:
