@@ -12,10 +12,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterViewFlipper;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -158,11 +160,24 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
                 mDrawer.openDrawer(Gravity.LEFT);
                 return true;
 
+            case R.id.acton_cart :{
+
+                Toast.makeText(HomeScreen.this,"Clicked",Toast.LENGTH_LONG).show();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+
+    }
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
