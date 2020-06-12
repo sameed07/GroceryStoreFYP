@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Activities.ProductDetailsActivity;
 import Models.ProductModel;
 
 
@@ -54,19 +55,19 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
         holder.txt_title.setText(model.getProduct_title());
         holder.txt_price.setText("Rs. "+model.getProduct_price());
 
-//        holder.product_img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(mContext, ProductDetailActivity.class);
-//                i.putExtra("product_title",model.getProduct_title());
-//                i.putExtra("product_desc",model.getProduct_desc());
-//                i.putExtra("product_price",model.getProduct_price());
-//                i.putExtra("product_time",model.getTime_stamp());
-//                i.putExtra("product_img",model.getProduct_img());
-//                mContext.startActivity(i);
-//
-//            }
-//        });
+        holder.product_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, ProductDetailsActivity.class);
+                i.putExtra("product_title",model.getProduct_title());
+                i.putExtra("product_desc",model.getProduct_desc());
+                i.putExtra("product_price",model.getProduct_price());
+                i.putExtra("product_time",model.getTime_stamp());
+                i.putExtra("product_img",model.getProduct_img());
+                mContext.startActivity(i);
+
+            }
+        });
 
 
 
