@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Activities.ProductActivity;
 import Models.CategoryModel;
 
 
@@ -54,12 +55,12 @@ public class CategoryAdapter extends  RecyclerView.Adapter<CategoryAdapter.ViewH
             @Override
             public void onClick(View v) {
 
-//                Intent i = new Intent(mContext, ProductActivity.class);
-//                i.putExtra("title", model.getCategory_title() );
-//                i.putExtra("desc",model.getCategory_desc());
-//                i.putExtra("id",model.getId());
-//                i.putExtra("img_url",model.getCategory_img());
-//                mContext.startActivity(i);
+                Intent i = new Intent(mContext, ProductActivity.class);
+                i.putExtra("title", model.getCategory_title() );
+                i.putExtra("desc",model.getCategory_desc());
+                i.putExtra("id",model.getId());
+                i.putExtra("img_url",model.getCategory_img());
+                mContext.startActivity(i);
             }
         });
     }
