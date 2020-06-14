@@ -162,7 +162,8 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
 
             case R.id.acton_cart :{
 
-                Toast.makeText(HomeScreen.this,"Clicked",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(HomeScreen.this,CartActivity.class));
+
             }
 
         }
