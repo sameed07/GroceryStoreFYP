@@ -9,4 +9,40 @@
 
     <include layout="@layout/toolbar"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/cart_recycler"
+        android:layout_margin="4dp"
+        />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFC107"
+        >
+        <TextView
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:id="@+id/txt_total"
+            android:layout_marginLeft="18dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RS. 2500 "
+            />
+
+        <Button
+            android:paddingEnd="12dp"
+            android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Check out"
+            android:textAllCaps="false"
+            android:background="#F6BF18"
+            android:id="@+id/btn_checkout"
+            />
+    </LinearLayout>
 </RelativeLayout>

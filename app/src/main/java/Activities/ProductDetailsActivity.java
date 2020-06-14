@@ -73,7 +73,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Inserting Contacts
                 Log.d("Insert: ", "Inserting ..");
-                if( db.addProduct(new CartModel("10341","Mens Wear","234","1rqrastasgasga"))){
+                if( db.addProduct(new CartModel(productId,title,price,img_url))){
 
                     Toast.makeText(ProductDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
                 }else{
