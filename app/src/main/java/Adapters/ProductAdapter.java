@@ -64,6 +64,7 @@ public class ProductAdapter extends  RecyclerView.Adapter<ProductAdapter.ViewHol
                 i.putExtra("product_price",model.getProduct_price());
                 i.putExtra("product_time",model.getTime_stamp());
                 i.putExtra("product_img",model.getProduct_img());
+                i.putExtra("product_id",model.getProduct_id());
                 mContext.startActivity(i);
 
             }

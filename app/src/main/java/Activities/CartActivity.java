@@ -71,7 +71,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
         Log.d("Reading: ", "Reading all contacts..");
         List<CartModel> mlist = db.getAllContacts();
        // contacts.add(new CartModel("alsga","Product Title","200","gangaskgaskjgkaj"));
-
+//        Toast.makeText(CartActivity.this, "" + mlist.get(1).getTitle(), Toast.LENGTH_SHORT).show();
         CartAdapter adapter = new CartAdapter(mlist,this, this);
         cart_recycler.setAdapter(adapter);
 
