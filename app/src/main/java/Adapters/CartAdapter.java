@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,17 +17,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Interface.CountPrice;
 import Models.CartModel;
 
 public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     List<CartModel> mList;
     Context mContext;
-    public  CartAdapter(Context mContext, List<CartModel> mList){
+    CountPrice countPrice;
 
-        this.mContext = mContext;
+    public CartAdapter(List<CartModel> mList, Context mContext, CountPrice countPrice) {
         this.mList = mList;
+        this.mContext = mContext;
+        this.countPrice = countPrice;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,9 +43,9 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
-        final int[] count = {0};
 
-        CartModel model = mList.get(position);
+
+        final CartModel model = mList.get(position);
         holder.txt_title.setText(model.getTitle());
         holder.txt_price.setText(model.getPrice());
        Picasso.get().load(model.getImg_url()).into(holder.product_img);
@@ -51,13 +56,23 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
              holder.count ++;
              holder.txt_count.setText(""+holder.count);
+
+             countPrice.getcount(Double.parseDouble(model.getPrice()),holder.count,true);
+
             }
         });
         holder.btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.count --;
-                holder.txt_count.setText(""+holder.count);
+                if(holder.count>=0) {
+                    holder.txt_count.setText("" + holder.count);
+                    countPrice.getcount(Double.parseDouble(model.getPrice()),holder.count,false);
+                }else{
+
+                    holder.btn_remove.setClickable(false);
+                    Toast.makeText(mContext, "Must be 1", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -69,7 +84,7 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public int count =0;
+        public int count =1;
         ImageView product_img;
         TextView txt_title,txt_price,txt_count;
         Button btn_add,btn_remove;
