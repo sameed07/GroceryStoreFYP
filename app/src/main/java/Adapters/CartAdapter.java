@@ -20,6 +20,8 @@ import java.util.List;
 import Interface.CountPrice;
 import Models.CartModel;
 
+import static Activities.CartActivity.TOTAL_PRICE;
+
 public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
     List<CartModel> mList;
@@ -49,7 +51,7 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
         holder.txt_title.setText(model.getTitle());
         holder.txt_price.setText(model.getPrice());
        Picasso.get().load(model.getImg_url()).into(holder.product_img);
-
+        countPrice.getcount(Double.parseDouble(model.getPrice()),holder.count,true);
         holder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,8 +59,9 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
              holder.count ++;
              holder.txt_count.setText(""+holder.count);
 
-             countPrice.getcount(Double.parseDouble(model.getPrice()),holder.count,true);
 
+             countPrice.getcount(Double.parseDouble(model.getPrice()),holder.count,true);
+           //     TOTAL_PRICE = TOTAL_PRICE-(Double.parseDouble(model.getPrice())* holder.count);
             }
         });
         holder.btn_remove.setOnClickListener(new View.OnClickListener() {

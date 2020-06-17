@@ -3,6 +3,7 @@ package LocalDb;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -35,8 +36,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_CART_TABLE = "CREATE TABLE orders(\n" +
-                "   ID   INT       PRIMARY KEY     ,\n" +
-                "   product_id          TEXT     ,\n" +
+                "   ID   INTEGER PRIMARY KEY     ,\n" +
+                "   product_id          TEXT UNIQUE    ,\n" +
                 "  product_title TEXT,\n" +
                 "  product_price TEXT ,\n" +
                 "   image_url TEXT  )";
@@ -131,5 +132,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // return contact list
         return contactList;
+    }
+
+    public long getItemsCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, "orders");
+        db.close();
+        return count;
     }
 }

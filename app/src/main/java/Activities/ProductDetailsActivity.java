@@ -28,6 +28,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private Button btn_cart;
     private String title,desc,productId,img_url,price,time;
     private DBHelper db;
+    private List<CartModel> mlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,28 +73,33 @@ public class ProductDetailsActivity extends AppCompatActivity {
         txt_time.setText(time);
         Picasso.get().load(img_url).into(product_img);
 
-        final List<CartModel> mlist = db.getAllContacts();
 
 
 
+        mlist = db.getAllContacts();
         btn_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Inserting Contacts
 
 
-                //todo need to find the logic huh
-                if (mlist.isEmpty()) {
+                    //todo need to find the logic huh
+                    if (mlist.isEmpty()) {
 
                     if (db.addProduct(new CartModel(productId, title, price, img_url))) {
                         Log.d("if", "in iff condition: ");
                         Toast.makeText(ProductDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                        if(!mlist.isEmpty())
+                            mlist.clear();
+
+                           mlist = db.getAllContacts();
                     } else {
 
                         Toast.makeText(ProductDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
+
                     for (CartModel model : mlist){
 
                         Log.d("sahgasghaskjk", "in loop: "+ model.getTitle() + " = " + productId);
@@ -100,8 +107,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             if (db.addProduct(new CartModel(productId, title, price, img_url))) {
                                 Log.d("if", "in if condition: ");
                                 Toast.makeText(ProductDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                                return;
+//                                if(!mlist.isEmpty())
+//                                    mlist.clear();
+//
+//                                mlist = db.getAllContacts();
                             } else {
-                                Toast.makeText(ProductDetailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProductDetailsActivity.this, "Already in cart", Toast.LENGTH_SHORT).show();
                             }
 //                db.addProduct(new CartModel(2,"10341","Mens Wear","234","1rqrastasgasga"));
 //                db.addProduct(new CartModel(3,"10341","Mens Wear","234","1rqrastasgasga"));
