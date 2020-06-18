@@ -38,7 +38,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
 
     private Toolbar toolbar;
     private DBHelper db;
-    TextView txt_total;
+    TextView txt_total,txt_total_dialog,txt_items;
     Button btn_checkout;
 
     FirebaseDatabase mDatabase;
@@ -82,7 +82,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
 
 
 
-        Toast.makeText(this, "" + db.getItemsCount(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + db.getItemsCount(), Toast.LENGTH_SHORT).show();
 
         cart_recycler = findViewById(R.id.cart_recycler);
         layoutManager = new LinearLayoutManager(this);
@@ -136,9 +136,27 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.address_dialog);
 
-      edtAddress = dialog.findViewById(R.id.edt_address);
-         edtPhone = dialog.findViewById(R.id.edt_phone);
+       edtAddress = dialog.findViewById(R.id.edt_address);
+       edtPhone = dialog.findViewById(R.id.edt_phone);
        btnConfirm = dialog.findViewById(R.id.btn_confirm);
+       txt_items = dialog.findViewById(R.id.txt_total_items);
+       txt_total_dialog = dialog.findViewById(R.id.txt_total_price);
+
+
+       txt_total_dialog.setText("RS. "+TOTAL_PRICE);
+       txt_items.setText("x" + db.getItemsCount());
+
+       btnConfirm.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               checout();
+               dialog.dismiss();
+               db.deleteDb();
+               startActivity(new Intent(CartActivity.this,OrderActivity.class));
+               finish();
+           }
+       });
 
         dialog.show();
     }
@@ -151,8 +169,8 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
         )) {
 
             Map<String, String> map = new HashMap<>();
-            map.put("total_item", "total_item");
-            map.put("total_price", txt_total.getText().toString());
+            map.put("total_item", txt_items.getText().toString());
+            map.put("total_price", txt_total_dialog.getText().toString());
             map.put("address", edtAddress.getText().toString());
             map.put("phone", edtPhone.getText().toString());
             map.put("user_id", currentUser);

@@ -140,4 +140,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return count;
     }
+
+    public void deleteDb(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("orders",null,null);
+    }
 }

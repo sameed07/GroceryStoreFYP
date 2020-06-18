@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="Activities.CartActivity"></activity>
+        <activity android:name="Activities.OrderActivity"></activity>
+        <activity android:name="Activities.CartActivity" />
         <activity android:name="Activities.ProductDetailsActivity" />
         <activity android:name="Activities.ProductActivity" />
         <activity android:name="Activities.CategoryActivity" />
