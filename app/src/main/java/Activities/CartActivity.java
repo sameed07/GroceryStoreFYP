@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,8 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
     private EditText edtAddress,edtPhone;
     private Button btnConfirm;
 
+    LinearLayout empty_layout;
+
 
     // private List<CartModel> mList = new ArrayList<>();
     @Override
@@ -79,16 +82,28 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
                 finish();
             }
         });
-
-
-
-        //Toast.makeText(this, "" + db.getItemsCount(), Toast.LENGTH_SHORT).show();
-
         cart_recycler = findViewById(R.id.cart_recycler);
         layoutManager = new LinearLayoutManager(this);
         cart_recycler.setLayoutManager(layoutManager);
         txt_total = findViewById(R.id.txt_total);
         btn_checkout = findViewById(R.id.btn_checkout);
+        empty_layout = findViewById(R.id.layout_empty);
+
+        if(db.getItemsCount() <=0){
+
+            cart_recycler.setVisibility(View.GONE);
+            empty_layout.setVisibility(View.VISIBLE);
+
+        }else{
+
+            empty_layout.setVisibility(View.GONE);
+            cart_recycler.setVisibility(View.VISIBLE);
+        }
+
+
+        //Toast.makeText(this, "" + db.getItemsCount(), Toast.LENGTH_SHORT).show();
+
+
 
 
         // Reading all contacts

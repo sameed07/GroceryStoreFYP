@@ -9,6 +9,34 @@
 
     <include layout="@layout/toolbar"/>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginBottom="200dp"
+        android:id="@+id/layout_empty"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="#fff">
+
+        <ImageView
+
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/empty_cart"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="Cart is Empty!"/>
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
