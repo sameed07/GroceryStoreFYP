@@ -118,7 +118,12 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
             @Override
             public void onClick(View v) {
 
-                showDialog();
+                if(db.getItemsCount() <=0) {
+                    Toast.makeText(CartActivity.this, "Cart us Empty!", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    showDialog();
+                }
             }
         });
 
@@ -159,17 +164,21 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
 
 
        txt_total_dialog.setText("RS. "+TOTAL_PRICE);
-       txt_items.setText("x" + db.getItemsCount());
+       txt_items.setText("x " + db.getItemsCount());
 
        btnConfirm.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
 
-               checout();
-               dialog.dismiss();
-               db.deleteDb();
-               startActivity(new Intent(CartActivity.this,OrderActivity.class));
-               finish();
+             
+                   Toast.makeText(CartActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
+               
+                   checout();
+                   dialog.dismiss();
+                   db.deleteDb();
+                   startActivity(new Intent(CartActivity.this, OrderActivity.class));
+                   finish();
+               
            }
        });
 
@@ -189,6 +198,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
             map.put("address", edtAddress.getText().toString());
             map.put("phone", edtPhone.getText().toString());
             map.put("user_id", currentUser);
+            map.put("order_status","pending");
             
             mRef.push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
