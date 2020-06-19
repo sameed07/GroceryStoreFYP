@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
     DatabaseReference mRef;
     FirebaseAuth mAuth;
     String currentUser;
-
+    List<CartModel> mlist;
     public static double TOTAL_PRICE = 0;
 
     RecyclerView cart_recycler;
@@ -110,7 +111,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
 
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
-        List<CartModel> mlist = db.getAllContacts();
+        mlist = db.getAllContacts();
        // contacts.add(new CartModel("alsga","Product Title","200","gangaskgaskjgkaj"));
 //        Toast.makeText(CartActivity.this, "" + mlist.get(1).getTitle(), Toast.LENGTH_SHORT).show();
         CartAdapter adapter = new CartAdapter(mlist,this, this);
@@ -194,6 +195,7 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
                 edtPhone.getText().toString()
         )) {
 
+            final long val = System.currentTimeMillis();
             Map<String, String> map = new HashMap<>();
             map.put("total_item", txt_items.getText().toString());
             map.put("total_price", txt_total_dialog.getText().toString());
@@ -201,16 +203,24 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
             map.put("phone", edtPhone.getText().toString());
             map.put("user_id", currentUser);
             map.put("order_status","pending");
+         //   Toast.makeText(this, "" + val, Toast.LENGTH_SHORT).show();
             
-            mRef.push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+            mRef.child(""+val).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
 
-                    Toast.makeText(CartActivity.this, "Order Placed Successful", Toast.LENGTH_SHORT).show();
 
-                    db.deleteDb();
-                    startActivity(new Intent(CartActivity.this, OrderActivity.class));
-                    finish();
+
+                    mRef.child(""+val).child("items").setValue(mlist).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CartActivity.this, "Order Placed Successful", Toast.LENGTH_SHORT).show();
+
+                            db.deleteDb();
+                            startActivity(new Intent(CartActivity.this, OrderActivity.class));
+                            finish();
+                        }
+                    });
                 }
             });
 

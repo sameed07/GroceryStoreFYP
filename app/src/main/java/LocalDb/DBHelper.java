@@ -154,10 +154,5 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //---deletes a particular title---
-    public boolean deleteTitle(String name)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("orders", "ID" + "=" + name, null) > 0;
-    }
+
 }
