@@ -145,4 +145,19 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("orders",null,null);
     }
+
+    // Deleting single contact
+    public void deleteContact(String  id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("orders", "product_id" + " = ?",
+                new String[] { String.valueOf(id)});
+        db.close();
+    }
+
+    //---deletes a particular title---
+    public boolean deleteTitle(String name)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("orders", "ID" + "=" + name, null) > 0;
+    }
 }

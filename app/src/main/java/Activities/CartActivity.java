@@ -35,7 +35,7 @@ import Interface.CountPrice;
 import LocalDb.DBHelper;
 import Models.CartModel;
 
-public class CartActivity extends AppCompatActivity implements CountPrice {
+public class CartActivity extends AppCompatActivity implements CountPrice{
 
     private Toolbar toolbar;
     private DBHelper db;
@@ -89,6 +89,8 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
         btn_checkout = findViewById(R.id.btn_checkout);
         empty_layout = findViewById(R.id.layout_empty);
 
+
+
         if(db.getItemsCount() <=0){
 
             cart_recycler.setVisibility(View.GONE);
@@ -113,6 +115,9 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
 //        Toast.makeText(CartActivity.this, "" + mlist.get(1).getTitle(), Toast.LENGTH_SHORT).show();
         CartAdapter adapter = new CartAdapter(mlist,this, this);
         cart_recycler.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+        //adapter.notifyItemRemoved(getAda);
 
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,13 +176,10 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
            public void onClick(View v) {
 
              
-                   Toast.makeText(CartActivity.this, "Cart is Empty", Toast.LENGTH_SHORT).show();
-               
+
                    checout();
                    dialog.dismiss();
-                   db.deleteDb();
-                   startActivity(new Intent(CartActivity.this, OrderActivity.class));
-                   finish();
+
                
            }
        });
@@ -205,6 +207,10 @@ public class CartActivity extends AppCompatActivity implements CountPrice {
                 public void onSuccess(Void aVoid) {
 
                     Toast.makeText(CartActivity.this, "Order Placed Successful", Toast.LENGTH_SHORT).show();
+
+                    db.deleteDb();
+                    startActivity(new Intent(CartActivity.this, OrderActivity.class));
+                    finish();
                 }
             });
 
