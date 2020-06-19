@@ -1,10 +1,12 @@
 package Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Activities.OrderDetailActivity;
 import Models.OrderModel;
 
 public class OrderAdapter extends  RecyclerView.Adapter<OrderAdapter.ViewHolder> {
@@ -38,12 +41,22 @@ public class OrderAdapter extends  RecyclerView.Adapter<OrderAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, int position) {
 
-        OrderModel model = mList.get(position);
+        final OrderModel model = mList.get(position);
 
         holder.txt_title.setText("Order No. "+ position);
         holder.txt_status.setText(model.getOrder_status());
         holder.txt_items.setText(model.getTotal_item());
         holder.txt_price.setText(model.getTotal_price());
+
+        holder.order_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(mContext, OrderDetailActivity.class);
+                i.putExtra("order_id",model.getOrder_id());
+                mContext.startActivity(i);
+            }
+        });
 
 }
 
@@ -55,6 +68,7 @@ public class OrderAdapter extends  RecyclerView.Adapter<OrderAdapter.ViewHolder>
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txt_title,txt_price,txt_items,txt_status;
+        LinearLayout order_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,7 +78,7 @@ public class OrderAdapter extends  RecyclerView.Adapter<OrderAdapter.ViewHolder>
             txt_price = itemView.findViewById(R.id.txt_total_price);
             txt_items = itemView.findViewById(R.id.txt_total_item);
             txt_status = itemView.findViewById(R.id.txt_status);
-
+            order_layout = itemView.findViewById(R.id.order_layout);
 
         }
     }
