@@ -26,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
@@ -35,6 +36,9 @@ import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import Common.Common;
+import Models.UserModel;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -117,6 +121,14 @@ public class SignupActivity extends AppCompatActivity {
                        
                             if(task.isSuccessful()){
 
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(edt_username.getText().toString()).
+                                                build();
+
+                                user.updateProfile(profileUpdates);
+
                                 Map<String, String> map = new HashMap<>();
                                 map.put("user_name", edt_username.getText().toString());
                                 map.put("user_email", edt_email.getText().toString());
@@ -128,6 +140,9 @@ public class SignupActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
+                                                Common.currentUser = new UserModel(edt_username.getText().toString(),
+                                                        edt_phone.getText().toString(),edt_password.getText().toString(),
+                                                        edt_email.getText().toString());
                                                 progressDialog.dismiss();
                                                 Toast.makeText(SignupActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(SignupActivity.this, HomeScreen.class));

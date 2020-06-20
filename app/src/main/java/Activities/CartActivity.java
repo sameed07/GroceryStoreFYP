@@ -35,6 +35,7 @@ import Adapters.CartAdapter;
 import Interface.CountPrice;
 import LocalDb.DBHelper;
 import Models.CartModel;
+import Models.Notifications;
 
 public class CartActivity extends AppCompatActivity implements CountPrice{
 
@@ -45,6 +46,10 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
 
     FirebaseDatabase mDatabase;
     DatabaseReference mRef;
+
+    FirebaseDatabase mNotifyDatabase;
+    DatabaseReference mNotify;
+
     FirebaseAuth mAuth;
     String currentUser;
     List<CartModel> mlist;
@@ -67,7 +72,13 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
         db = new DBHelper(this);
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference("Orders");
+
+        mNotifyDatabase = FirebaseDatabase.getInstance();
+        mNotify = mNotifyDatabase.getReference("Notifications");
+
         mAuth = FirebaseAuth.getInstance();
+
+
         currentUser = mAuth.getCurrentUser().getUid();
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -214,11 +225,20 @@ public class CartActivity extends AppCompatActivity implements CountPrice{
                     mRef.child(""+val).child("items").setValue(mlist).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(CartActivity.this, "Order Placed Successful", Toast.LENGTH_SHORT).show();
 
-                            db.deleteDb();
-                            startActivity(new Intent(CartActivity.this, OrderActivity.class));
-                            finish();
+                            Notifications noti = new Notifications(currentUser,"New Order has been placed by " + mAuth.getCurrentUser().getDisplayName(),"Order Placed","","true");
+                            mNotify.push().setValue(noti).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    Toast.makeText(CartActivity.this, "Order Placed Successful", Toast.LENGTH_SHORT).show();
+
+                                    db.deleteDb();
+                                    startActivity(new Intent(CartActivity.this, OrderActivity.class));
+                                    finish();
+                                }
+                            });
+
                         }
                     });
                 }

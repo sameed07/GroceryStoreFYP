@@ -151,6 +151,13 @@ public class CartAdapter extends  RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 return false;
             }
         });
+        
+        holder.layout_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "hold to delete the item from cart", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

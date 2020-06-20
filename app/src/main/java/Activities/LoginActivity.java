@@ -30,6 +30,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.infusibleCoder.grocerystorefyp.R;
 
+import Common.Common;
+import Models.UserModel;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "Tag";
@@ -101,6 +104,9 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
+                            Common.currentUser = new UserModel(mAuth.getCurrentUser().getDisplayName(),
+                                    mAuth.getCurrentUser().getPhoneNumber(),"",
+                                    mAuth.getCurrentUser().getEmail());
                             Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             startActivity(new Intent(LoginActivity.this, HomeScreen.class));
