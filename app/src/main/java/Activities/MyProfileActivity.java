@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,42 +23,53 @@ import com.infusibleCoder.grocerystorefyp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.CategoryAdapter;
 import Adapters.OrderAdapter;
+import Common.Common;
 import Models.CategoryModel;
 import Models.OrderModel;
 
-public class OrderActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
 
+    private TextView txt_name,txt_phone;
     private Toolbar toolbar;
 
-    private FirebaseDatabase mdatabase;
-    private DatabaseReference mRef;
-    FirebaseAuth mAuth;
-
-    //recycler
-    RecyclerView orderRecycler;
+    RecyclerView completed_recycler;
     RecyclerView.LayoutManager layoutManager;
     List<OrderModel> mList = new ArrayList<>();
+    CategoryAdapter adapter;
+    //Firebase
+    FirebaseDatabase mDatabase;
+    DatabaseReference mRef;
+    FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_my_profile);
 
-        mAuth = FirebaseAuth.getInstance();
-        mdatabase = FirebaseDatabase.getInstance();
-        mRef   = mdatabase.getReference("Orders");
-        orderRecycler = findViewById(R.id.order_recycler);
-        layoutManager = new LinearLayoutManager(this);
-        orderRecycler.setLayoutManager(layoutManager);
-        // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Orders");
+        toolbar.setTitle("Profile");
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        loadData();
+        mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference("Complete_Orders");
+        mAuth = FirebaseAuth.getInstance();
+
+        txt_name = findViewById(R.id.txt_user_name);
+        txt_phone = findViewById(R.id.txt_user_phone);
+        completed_recycler = findViewById(R.id.complete_recycler);
+        layoutManager = new LinearLayoutManager(this);
+        completed_recycler.setLayoutManager(layoutManager);
+
+
+//        txt_phone.setText(Common.currentUser.getPhone_number());
+//        txt_name.setText(Common.currentUser.getUser_name());
+
+//        Toast.makeText(this, ""  + Common.currentUser.getUser_name(), Toast.LENGTH_SHORT).show();
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +77,9 @@ public class OrderActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),HomeScreen.class));
             }
         });
+
+
+        loadData();
 
     }
 
@@ -79,8 +95,8 @@ public class OrderActivity extends AppCompatActivity {
                     model.setOrder_id(ds.getKey());
                     mList.add(model);
 
-                    OrderAdapter adapter = new OrderAdapter(mList,OrderActivity.this);
-                    orderRecycler.setAdapter(adapter);
+                    OrderAdapter adapter = new OrderAdapter(mList,MyProfileActivity.this);
+                    completed_recycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
                 }

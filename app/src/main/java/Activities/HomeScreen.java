@@ -211,7 +211,9 @@ public class HomeScreen extends AppCompatActivity implements GetSliderItemPositi
                 mDrawer.closeDrawers();
                 break;
             case R.id.nav_profile:
-
+                toolbar.setTitle("Profile");
+                startActivity(new Intent(HomeScreen.this,MyProfileActivity.class));
+                mDrawer.closeDrawers();
                 mDrawer.closeDrawers();
                 break;
             case R.id.nav_settnig:
