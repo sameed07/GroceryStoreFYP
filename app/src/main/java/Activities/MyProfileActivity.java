@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.CategoryAdapter;
+import Adapters.CompleteOrderAdapter;
 import Adapters.OrderAdapter;
 import Common.Common;
 import Models.CategoryModel;
@@ -83,6 +84,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
     }
 
+    // TODO: 25/06/2020  I have to create a complete order details activity 
+
     public void loadData(){
 
         mRef.orderByChild("user_id").equalTo(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -95,7 +98,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     model.setOrder_id(ds.getKey());
                     mList.add(model);
 
-                    OrderAdapter adapter = new OrderAdapter(mList,MyProfileActivity.this);
+                    CompleteOrderAdapter adapter = new CompleteOrderAdapter(mList,MyProfileActivity.this);
                     completed_recycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
