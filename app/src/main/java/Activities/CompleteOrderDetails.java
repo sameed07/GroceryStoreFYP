@@ -76,6 +76,7 @@ public class CompleteOrderDetails extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                mList.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
 
                     CartModel model = ds.getValue(CartModel.class);

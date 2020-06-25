@@ -73,6 +73,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                mList.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
 
                     OrderModel model = ds.getValue(OrderModel.class);
@@ -81,7 +82,7 @@ public class OrderActivity extends AppCompatActivity {
 
                     OrderAdapter adapter = new OrderAdapter(mList,OrderActivity.this);
                     orderRecycler.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                  //  adapter.notifyDataSetChanged();
 
                 }
 
